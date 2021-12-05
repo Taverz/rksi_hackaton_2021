@@ -20,8 +20,39 @@ class HomePage extends StatelessWidget {
     // int  count =  provBasket.countItem; 
     return Scaffold(
       body: SafeArea(
-        child: Container(),
+        child: Column(
+          children: [
+            Expanded(
+              child: 
+              (MediaQuery.of(context).size.width < 800) ?  //Если ширина страницы меньше 800 то вывести это, если нет то
+                ListView.builder(
+                  itemCount: provBasket.itemsBasket.length,
+                  itemBuilder: (context, index){
+                    return _itemList(index);
+                  }
+                ) 
+                : //
+                GridView.builder(//то вывести это
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3, //паралельно 3 
+                      crossAxisSpacing: 16, //расстояние между ними по горизонтали
+                      mainAxisSpacing: 16 //расстояние между ними по вертикали
+                  ),
+                  itemBuilder:(context, index){
+                    return _itemList(index);
+                  }
+
+                )
+            )
+            
+          ],
+        ),
       ),
+    );
+  }
+  Widget _itemList(int index){  //Чтобы по 50 раз одно и тоже не писать мы выносим его в отдельный метод, где возврашаем наш виджет
+    return Container(
+      child: Text("Item $index"),
     );
   }
 }
