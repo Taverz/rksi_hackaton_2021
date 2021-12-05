@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MultiProvider(
+      home: MultiProvider( //уьзен
         providers: [
           //Provider с изменением состояния
           ChangeNotifierProvider(create: (context)=>DataBase()),
