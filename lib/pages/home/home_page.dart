@@ -1,30 +1,58 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rksi_hackaton_2021/model/basket_item.dart';
 import 'package:rksi_hackaton_2021/provider/basket.dart';
+import 'package:rksi_hackaton_2021/provider/provider.dart';
 
 ///Главная страница
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+   HomePage({Key? key}) : super(key: key);
+
+  ///Для точек карусели изображений
+   CarouselController _controller = CarouselController();
+   ///Список виджетов для карусели изображений
+   List<Widget> listItem = [];
+   ///ДЛя того чтобы каррусель можно было переключать
+  int _current = 0;
+
+  List<String> listURL_image = [
+      "https://mebelsofi.ru/upload/iblock/bb3/bb3a32bf63794d8ce9a9539d3a31b6ae.jpg",
+      "https://mebelsofi.ru/upload/iblock/0d5/0d5b735a5b2b0529dba29a60bb95a8e2.jpg"
+
+    ];
+  
+  BuildContext? contextW ;
+ late  CarouselIndicator  provCarousel;
 
   @override
   Widget build(BuildContext context) {
     //синий обозначает что он нигде не используется
     Basket provBasket = Provider.of<Basket>(context);
+    provCarousel = Provider.of<CarouselIndicator>(context);
     provBasket.addItemBasket(BasketItem(
         name: "NMAE", price: 200.30, description: "desctiprion simple"));
-    //int count = provBasket.countItem;
+
+    contextW = context;
+
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             content(), //Верх приложения, меню
-            slider(), //Слайдер
+            Container(
+              height: 350,
+              //Сначала создаем список ссылок, потом создаем список виджетов, потом вкладываем это все карусель
+              child: slider(loadListWidgetCarousel(listURL_image)), //Слайдер
+            ),
+            
             Expanded(
                 //низ приложения
                 child: Row(
               children: [
+                (MediaQuery.of(context).size.height < 880 ) ? Container()
+                : 
                 Expanded(
                     //Блок слева
                     flex: 1,
@@ -88,6 +116,8 @@ class HomePage extends StatelessWidget {
                         ],
                       ),
                     )),
+                     (MediaQuery.of(context).size.height < 880 ) ? Container()
+                : 
                 SizedBox(
                   width: 100,
                 ),
@@ -129,6 +159,34 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  ///Создаем  список виджетов для карусели
+  List<Widget> loadListWidgetCarousel(List<String> listW){
+    listItem = listW.map((i) {
+    return Builder(
+      builder: (BuildContext context) {
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.symmetric(horizontal: 5.0),
+          decoration: BoxDecoration(
+            color: Colors.amber
+          ),
+          child: CachedNetworkImage(
+              imageUrl: i,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+              imageBuilder: (context, image) {
+                return Image(image: image, fit: BoxFit.fill,);
+              }
+              ,
+          ),
+        );
+      },
+    );
+  }).toList();
+  return listItem;
+  }
+
+  
   Widget _itemList(int index) {
     //Чтобы по 50 раз одно и тоже не писать мы выносим его в отдельный метод, где возврашаем наш виджет
     return Container(
@@ -178,85 +236,69 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  slider() {
-    return Container(
-      margin: EdgeInsets.only(top: 20, bottom: 20, right: 10, left: 10),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.blue),
-        color: Colors.red,
-      ),
-      height: 350,
-      width: double.infinity,
+  slider(List<Widget> listWidget) {
+
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Container(
+            margin: EdgeInsets.only(top: 20, bottom: 20, right: 10, left: 10),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.blue),
+              color: Colors.grey[200],
+            ),
+            height: 350,
+            width: double.infinity,
+            child: CarouselSlider(
+              items: listWidget,
+               carouselController: _controller,
+              options: CarouselOptions(
+                  height: 400,
+                  aspectRatio: 16/9,
+                  viewportFraction: 0.8,
+                  initialPage: 0,
+                  enableInfiniteScroll: true,
+                  reverse: false,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 3),
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enlargeCenterPage: true,
+                  onPageChanged: (intW, asd){
+                      provCarousel.changeIndex(intW) ;
+                  },
+                  scrollDirection: Axis.horizontal,
+              )
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 15,
+          right: MediaQuery.of(contextW!).size.width / 2 - 50,
+          child: 
+        Center(
+          child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: listItem.asMap().entries.map((entry) {
+                  return GestureDetector(
+                    onTap: () => _controller.animateToPage(entry.key),
+                    child: Container(
+                      width: 12.0,
+                      height: 12.0,
+                      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: (Theme.of(contextW!).brightness == Brightness.dark
+                                  ? Colors.white
+                                  : Colors.black)
+                              .withOpacity(provCarousel.indexInd == entry.key ? 0.9 : 0.4)),
+                    ),
+                  );
+                }).toList(),
+              ),
+        ),
+        )
+      ],
     );
   }
 }
-
-// class ImageSliderDemo extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text('Image slider demo')),
-//       body: Container(
-//           child: CarouselSlider(
-//         options: CarouselOptions(),
-//         items: imgList
-//             .map((item) => Container(
-//                   child: Center(
-//                       child:
-//                           Image.network(item, fit: BoxFit.cover, width: 1000)),
-//                 ))
-//             .toList(),
-//       )),
-//     );
-//   }
-// }
-
-// final List<Widget> imageSliders = imgList
-//     .map((item) => Container(
-//           child: Container(
-//             margin: EdgeInsets.all(5.0),
-//             child: ClipRRect(
-//                 borderRadius: BorderRadius.all(Radius.circular(5.0)),
-//                 child: Stack(
-//                   children: <Widget>[
-//                     Image.network(item, fit: BoxFit.cover, width: 1000.0),
-//                     Positioned(
-//                       bottom: 0.0,
-//                       left: 0.0,
-//                       right: 0.0,
-//                       child: Container(
-//                         decoration: BoxDecoration(
-//                           gradient: LinearGradient(
-//                             colors: [
-//                               Color.fromARGB(200, 0, 0, 0),
-//                               Color.fromARGB(0, 0, 0, 0)
-//                             ],
-//                             begin: Alignment.bottomCenter,
-//                             end: Alignment.topCenter,
-//                           ),
-//                         ),
-//                         padding: EdgeInsets.symmetric(
-//                             vertical: 10.0, horizontal: 20.0),
-//                         child: Text(
-//                           'No. ${imgList.indexOf(item)} image',
-//                           style: TextStyle(
-//                             color: Colors.white,
-//                             fontSize: 20.0,
-//                             fontWeight: FontWeight.bold,
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 )),
-//           ),
-//         ))
-//     .toList();
-// final List<String> imgList = [
-//   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-//   'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-//   'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-//   'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-//   'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-//   'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
-// ];

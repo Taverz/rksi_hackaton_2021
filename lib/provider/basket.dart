@@ -14,11 +14,13 @@ class Basket extends ChangeNotifier{
   addItemBasket(BasketItem item){
     countItem++;
     itemsBasket.add(item);
+     notifyListeners();
   }
 
   removeItemBasket(BasketItem item){
     countItem--;
     itemsBasket.removeWhere((element) => element == item);
+     notifyListeners();
   }
 
   List<BasketItem> getAllItemsBasket(){
