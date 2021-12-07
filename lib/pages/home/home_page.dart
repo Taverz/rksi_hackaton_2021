@@ -19,29 +19,87 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            content(),
-            slider(),
+            content(), //Верх приложения, меню
+            slider(), //Слайдер
             Expanded(
+                //низ приложения
                 child: Row(
               children: [
                 Expanded(
+                    //Блок слева
                     flex: 1,
                     child: Container(
+                      margin: EdgeInsets.only(left: 15, bottom: 15),
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black54)),
                       width: 250,
+                      child: Column(
+                        children: [
+                          Container(
+                            //Общий блок
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    flex: 1,
+                                    child: Container(
+                                      margin: EdgeInsets.all(15),
+                                      //левый подблок
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.black54)),
+                                      height: 150,
+                                      width: 150,
+                                    )),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Expanded(
+                                    flex: 3,
+                                    child: Container(
+                                      margin: EdgeInsets.all(15),
+                                      //правый подблок
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.black54)),
+                                      height: 150,
+                                      width: 150,
+                                    ))
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: Colors.black54)),
+                                  margin: EdgeInsets.all(15),
+                                  width: double.infinity)),
+                          SizedBox(
+                            height: 100,
+                          ),
+                          Container(
+                            child: Text("Button"),
+                            margin: EdgeInsets.all(15),
+                            width: 250,
+                            height: 100,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black54)),
+                          )
+                        ],
+                      ),
                     )),
                 SizedBox(
                   width: 100,
                 ),
                 Expanded(
+                    //блок справа
                     flex: 3,
                     child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black54),
                           color: Colors.blue,
                         ),
-                        margin: EdgeInsets.only(right: 50),
+                        margin: EdgeInsets.only(right: 50, bottom: 15),
                         child: (MediaQuery.of(context).size.width < 800)
                             ? //Если ширина страницы меньше 800 то вывести это, если нет то
                             ListView.builder(
@@ -78,8 +136,8 @@ class HomePage extends StatelessWidget {
       color: Colors.transparent,
       child: Center(
         child: Container(
-            width: 100,
-            height: 100,
+            width: 275,
+            height: 275,
             color: Colors.blueGrey[300],
             child: Text("Item $index")),
       ),
@@ -122,6 +180,11 @@ class HomePage extends StatelessWidget {
 
   slider() {
     return Container(
+      margin: EdgeInsets.only(top: 20, bottom: 20, right: 10, left: 10),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.blue),
+        color: Colors.red,
+      ),
       height: 350,
       width: double.infinity,
     );
