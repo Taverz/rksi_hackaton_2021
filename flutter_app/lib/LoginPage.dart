@@ -13,14 +13,21 @@ class _LoginPageState extends State<LoginPage> {
     TextEditingController _emailController = TextEditingController();
     TextEditingController _passwordController = TextEditingController();
     _name() {
-      return const Padding(
-        padding: EdgeInsets.only(top: 150),
-        child: Align(
-            child: Text(
-          "Добро пожаловать!",
-          style: TextStyle(fontSize: 40),
-        )),
-      );
+      return Container(
+          width: MediaQuery.of(context).size.width,
+          height: 200,
+          decoration: BoxDecoration(
+            color: Colors.green[200],
+            shape: BoxShape.circle,
+          ),
+          child: Column(children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  color: Colors.green[100], shape: BoxShape.circle),
+              height: 100,
+            ),
+          ]));
     }
 
     _inputText(String hint, TextEditingController controller, bool hide) {
@@ -35,7 +42,6 @@ class _LoginPageState extends State<LoginPage> {
     _content() {
       return Container(
           height: 300,
-          padding: EdgeInsets.only(top: 150),
           child: Stack(
             children: [
               Positioned.fill(
@@ -82,10 +88,26 @@ class _LoginPageState extends State<LoginPage> {
           ));
     }
 
+    _logo(String text) {
+      return Container(
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 30),
+        ),
+      );
+    }
+
     return Scaffold(
         backgroundColor: Colors.purple,
-        body: Column(
-          children: <Widget>[_name(), _content()],
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              _name(),
+              SizedBox(height: 50),
+              _content(),
+              _logo("KFK")
+            ],
+          ),
         ));
   }
 }
