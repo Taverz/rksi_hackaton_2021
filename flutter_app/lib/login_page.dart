@@ -67,7 +67,9 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
 
-    _button(String text,) {
+    _button(
+      String text,
+    ) {
       //Виджет кнопки
       return ElevatedButton(
         onPressed: () async {
@@ -76,6 +78,8 @@ class _LoginPageState extends State<LoginPage> {
               email: _emailController.text, password: _passwordController.text);
           if (auth) {
             print("AUTH ");
+            emaiil = _emailController.text;
+            password = _passwordController.text;
             Navigator.push(
                 context, MaterialPageRoute(builder: (_) => profilePage()));
           } else {
@@ -158,7 +162,9 @@ class _LoginPageState extends State<LoginPage> {
                         shape: BoxShape.circle,
                         color: Colors.blue,
                       ),
-                      child: _button("", ), //Вызов виджета кнопки
+                      child: _button(
+                        "",
+                      ), //Вызов виджета кнопки
                       height: 60,
                       width: 60,
                     ),

@@ -7,7 +7,6 @@ import 'package:flutter_app/calendar_page.dart';
 import 'package:flutter_app/provider/event_provider.dart';
 import 'package:provider/provider.dart';
 
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -15,18 +14,18 @@ import 'package:flutter/services.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
-
 import 'package:firebase_core/firebase_core.dart';
 import 'chat/chat_page.dart';
 
- final FirebaseFirestore fire = FirebaseFirestore.instance;
-  // final FirebaseAuth _auth = FirebaseAuth.instance;  
-String? emaiil , password;
-  
-void main() async{
+final FirebaseFirestore fire = FirebaseFirestore.instance;
+// final FirebaseAuth _auth = FirebaseAuth.instance;
+String? emaiil, password;
+
+void main() async {
   runApp(const MyApp());
   await getInitFireBaseAndPush();
-  // setUser(ProfileData(name: "name Naem", email: "admin@gg.ru", descritption: "descritption ME"));
+  setUser(ProfileData(
+      name: "Фёдоров Кирилл", email: "studen@gg.ru", descritption: "ch1ort"));
 }
 
 class MyApp extends StatelessWidget {
@@ -37,14 +36,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => ChangeNotifierProvider(
       create: (context) => EventProvider(),
       child: const MaterialApp(
-        home: ChatPage(),
+        home: LoginPage(),
       ));
 }
 
-
-
 Future getInitFireBaseAndPush() async {
-
   await Firebase.initializeApp();
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -58,44 +54,28 @@ Future getInitFireBaseAndPush() async {
     newPushMessage(message.data);
   });
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published! ${message.data}');
-      newPushMessage(message.data);
-    });
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    print('A new onMessageOpenedApp event was published! ${message.data}');
+    newPushMessage(message.data);
+  });
 
-
-
-    // Set the background messaging handler early on, as a named top-level function
-    FirebaseMessaging.onBackgroundMessage(myBackgroundHandler);
-
-
-
+  // Set the background messaging handler early on, as a named top-level function
+  FirebaseMessaging.onBackgroundMessage(myBackgroundHandler);
 }
-
 
 newPushMessage(Map<String, dynamic> message) {
   print(message.toString());
   late String msgOSType = '';
   if (message.containsKey('data')) {
-
-
-  }else {
-
-  }
-
+  } else {}
 
   switch (msgOSType) {
     case 'notify_type':
-      {
-
-      }
+      {}
       break;
   }
-
 }
-
 
 Future<void> myBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message ${message.messageId}');
-
 }

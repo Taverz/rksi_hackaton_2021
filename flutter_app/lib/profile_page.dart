@@ -178,42 +178,43 @@ class _profilePageState extends State<profilePage> {
       child: Column(
         children: <Widget>[
           FutureBuilder(
-            future: getUsersData(login:emaiil! , password: password! ),
-          builder: (context, async) {
-            String name ="Курбатова Анастасия" ;
+              future: getUsersData(
+                  login: emaiil ?? "admin", password: password ?? "123"),
+              builder: (context, async) {
+                String name = "Курбатова Анастасия";
 
-            if( profileDataCurrent!= null){
-              print(profileDataCurrent!.name);
-                name = profileDataCurrent!.name;
-            }
-            return _profileInfo(name);
-          }
-        ), _contentInfo()],
+                if (profileDataCurrent != null) {
+                  print(profileDataCurrent!.name);
+                  name = profileDataCurrent!.name;
+                }
+                return _profileInfo(name);
+              }),
+          _contentInfo()
+        ],
       ),
     ));
   }
 }
 
-
-
-List<QueryDocumentSnapshot<Map<String, dynamic>>>? calendare ;
+List<QueryDocumentSnapshot<Map<String, dynamic>>>? calendare;
 List<ProfileData>? allData_calendare;
 
 ProfileData? profileDataCurrent;
 
-Future<ProfileData?> getUsersData({required String login , required String password}) async {
-   var querySnapshot = await fire.collection('users').doc(login).get();
+Future<ProfileData?> getUsersData(
+    {required String login, required String password}) async {
+  var querySnapshot = await fire.collection('users').doc(login).get();
 
-   Map? maps = querySnapshot.data();
-   if(maps != null){
-     profileDataCurrent = ProfileData.fromMap(maps);
-   }
-  
+  Map? maps = querySnapshot.data();
+  if (maps != null) {
+    profileDataCurrent = ProfileData.fromMap(maps);
+  }
+
   //  profileDataCurrent = profileData;
   //  get()
   //  ;
 
-  //  List<Event> 
+  //  List<Event>
   //  allData
   // var tte =querySnapshot.docs;
   //  allData_calendare = querySnapshot.docs()
@@ -231,7 +232,7 @@ Future<ProfileData?> getUsersData({required String login , required String passw
   // var allData = calendare![0]!.docs().map((doc) => doc.data()).toList();
   //   List allDaata = calendare.;
   //  calendare = calendare;
-  
+
   // if(calendare != null)
   // Event.fromMap(calendare);
   return profileDataCurrent;
@@ -241,12 +242,13 @@ Future<ProfileData?> getUsersData({required String login , required String passw
 //  await fire.collection('df5239jdsf3').doc("calen").delete();
 // }
 
-setUser(ProfileData data)async {
- 
-
+setUser(ProfileData data) async {
   // var uuid = Uuid();
   // String random = uuid.v1();
- await fire.collection('users').doc(data.email).set(data.toMap()); // update({"update":data.toMap()});
+  await fire
+      .collection('users')
+      .doc(data.email)
+      .set(data.toMap()); // update({"update":data.toMap()});
 }
 
 class ProfileData {
@@ -260,24 +262,23 @@ class ProfileData {
     required this.descritption,
   });
 
-   Map<String, dynamic> toMap(){
-     return {
-      "name":name,
+  Map<String, dynamic> toMap() {
+    return {
+      "name": name,
       // "to":modifiedReleaseDate,
       // "allDay":allDay,
       // "froml":modifiedReleaseDate2,
-      "email":email,
-      "descritption":name,
+      "email": email,
+      "descritption": name,
       // "description":description,
     };
-   }
+  }
 
-    factory ProfileData.fromMap(Map map){
+  factory ProfileData.fromMap(Map map) {
     return ProfileData(
-      name: map["name"] ,
-      email: map["email"] ,
-      descritption: map["descritption"] ,
+      name: map["name"],
+      email: map["email"],
+      descritption: map["descritption"],
     );
-    }
-
+  }
 }
