@@ -65,37 +65,30 @@ class _profilePageState extends State<profilePage> {
                 Container(
                     child: Row(
                   children: [
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (_)=>
-                            ChatPage())
-                            );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.only(top: 10),
-                        margin: EdgeInsets.only(
-                            left: 40, right: 20, top: 20, bottom: 20),
-                        height: 150,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(254, 245, 245, 1),
-                          borderRadius: BorderRadius.all(Radius.circular(40)),
-                          border: Border.all(color: Colors.black),
-                        ),
-                        child: Column(
-                          children: [
-                            Text("Сообщения"),
-                            Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image:
-                                          AssetImage('assets/images/Message.png'),
-                                      fit: BoxFit.fill)),
-                            )
-                          ],
-                        ),
+                    Container(
+                      padding: EdgeInsets.only(top: 10),
+                      margin: EdgeInsets.only(
+                          left: 40, right: 20, top: 20, bottom: 20),
+                      height: 150,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(254, 245, 245, 1),
+                        borderRadius: BorderRadius.all(Radius.circular(40)),
+                        border: Border.all(color: Colors.black),
+                      ),
+                      child: Column(
+                        children: [
+                          Text("Сообщения"),
+                          Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image:
+                                        AssetImage('assets/images/Message.png'),
+                                    fit: BoxFit.fill)),
+                          )
+                        ],
                       ),
                     ),
                     GestureDetector(
@@ -153,33 +146,28 @@ class _profilePageState extends State<profilePage> {
                           ],
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => CalendarWidget())),
-                        child: Container(
-                            padding: EdgeInsets.only(top: 10),
-                            height: 150,
-                            width: 150,
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(254, 245, 245, 1),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(40)),
-                                border: Border.all(color: Colors.black)),
-                            child: Column(
-                              children: [
-                                Text("Помощь"),
-                                Container(
-                                    height: 100,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                'assets/images/Help.png'),
-                                            fit: BoxFit.fill))),
-                              ],
-                            )),
-                      ),
+                      Container(
+                          padding: EdgeInsets.only(top: 10),
+                          height: 150,
+                          width: 150,
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(254, 245, 245, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(40)),
+                              border: Border.all(color: Colors.black)),
+                          child: Column(
+                            children: [
+                              Text("Помощь"),
+                              Container(
+                                  height: 100,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/images/Help.png'),
+                                          fit: BoxFit.fill))),
+                            ],
+                          )),
                     ],
                   ),
                 ),
@@ -191,9 +179,10 @@ class _profilePageState extends State<profilePage> {
       child: Column(
         children: <Widget>[
           FutureBuilder(
-            future: getUsersData(login:emaiil?? "kl" , password: password??"jk" ),
-          builder: (context, async) {
-            String name ="Курбатова Анастасия" ;
+              future: getUsersData(
+                  login: emaiil ?? "admin", password: password ?? "123"),
+              builder: (context, async) {
+                String name = "Курбатова Анастасия";
 
             if( profileDataCurrent!= null){
               print(profileDataCurrent!.name);

@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
           if (auth) {
             print("AUTH ");
             emaiil = _emailController.text;
-            password =  _passwordController.text;
+            password = _passwordController.text;
             Navigator.push(
                 context, MaterialPageRoute(builder: (_) => profilePage()));
           } else {
