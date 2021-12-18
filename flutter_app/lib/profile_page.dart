@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/calendar_page.dart';
+import 'package:flutter_app/main.dart';
+import 'package:flutter_app/model/event.dart';
+import 'package:uuid/uuid.dart';
 
 class profilePage extends StatefulWidget {
   const profilePage({Key? key}) : super(key: key);
@@ -172,8 +176,108 @@ class _profilePageState extends State<profilePage> {
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
-        children: <Widget>[_profileInfo("Курбатова Анастасия"), _contentInfo()],
+        children: <Widget>[
+          FutureBuilder(
+            future: getUsersData(login:emaiil! , password: password! ),
+          builder: (context, async) {
+            String name ="Курбатова Анастасия" ;
+
+            if( profileDataCurrent!= null){
+              print(profileDataCurrent!.name);
+                name = profileDataCurrent!.name;
+            }
+            return _profileInfo(name);
+          }
+        ), _contentInfo()],
       ),
     ));
   }
+}
+
+
+
+List<QueryDocumentSnapshot<Map<String, dynamic>>>? calendare ;
+List<ProfileData>? allData_calendare;
+
+ProfileData? profileDataCurrent;
+
+Future<ProfileData?> getUsersData({required String login , required String password}) async {
+   var querySnapshot = await fire.collection('users').doc(login).get();
+
+   Map? maps = querySnapshot.data();
+   if(maps != null){
+     profileDataCurrent = ProfileData.fromMap(maps);
+   }
+  
+  //  profileDataCurrent = profileData;
+  //  get()
+  //  ;
+
+  //  List<Event> 
+  //  allData
+  // var tte =querySnapshot.docs;
+  //  allData_calendare = querySnapshot.docs()
+
+  //  .map((doc ) {
+  //   //var trr = doc.data();
+  //   //print("DOC"+doc["update"].toString());
+  //   return ProfileData.fromMap(doc as Map);
+  //  }).toList();
+
+  //  .then((value ){
+  //   calendare = value.docs.toList() ;
+  // });
+
+  // var allData = calendare![0]!.docs().map((doc) => doc.data()).toList();
+  //   List allDaata = calendare.;
+  //  calendare = calendare;
+  
+  // if(calendare != null)
+  // Event.fromMap(calendare);
+  return profileDataCurrent;
+}
+
+// deleteCalendare()async {
+//  await fire.collection('df5239jdsf3').doc("calen").delete();
+// }
+
+setUser(ProfileData data)async {
+ 
+
+  // var uuid = Uuid();
+  // String random = uuid.v1();
+ await fire.collection('users').doc(data.email).set(data.toMap()); // update({"update":data.toMap()});
+}
+
+class ProfileData {
+  String name;
+  String email;
+  String descritption;
+
+  ProfileData({
+    required this.name,
+    required this.email,
+    required this.descritption,
+  });
+
+   Map<String, dynamic> toMap(){
+     return {
+      "name":name,
+      // "to":modifiedReleaseDate,
+      // "allDay":allDay,
+      // "froml":modifiedReleaseDate2,
+      "email":email,
+      "descritption":name,
+      // "description":description,
+    };
+   }
+
+    factory ProfileData.fromMap(Map map){
+    return ProfileData(
+      name: map["name"] ,
+      email: map["email"] ,
+      descritption: map["descritption"] ,
+    );
+    }
+
 }

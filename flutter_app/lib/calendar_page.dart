@@ -24,14 +24,14 @@ class CalendarWidget extends StatelessWidget {
       body: FutureBuilder(
         future: getCAlendare(),
         builder: (context, snapshot) {
-          List<Event> getData = [];
-          if(snapshot.hasData && snapshot.data != null){
-              getData = allData_calendare!;
-              // getData = snapshot.data as List<Event> ;
-              envents.addAll(allData_calendare!);
-               print("PPPPP "+allData_calendare!.length.toString());
-          }
-          print("PPPPP22 "+getData.length.toString());
+          // List<Event> getData = [];
+          // if(snapshot.hasData && snapshot.data != null){
+          //     getData = allData_calendare!;
+          //     // getData = snapshot.data as List<Event> ;
+          //     envents.addAll(allData_calendare!);
+          //      print("PPPPP "+allData_calendare!.length.toString());
+          // }
+          // print("PPPPP22 "+getData.length.toString());
           return Center(
             child: SfCalendar(
               todayHighlightColor: Colors.green,

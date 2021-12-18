@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/bi/auth.dart';
+import 'package:flutter_app/main.dart';
 import 'package:flutter_app/profile_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -73,6 +74,8 @@ class _LoginPageState extends State<LoginPage> {
                       bool auth = await LoginFire(FirebaseAuth.instance).signIn(email: _emailController.text, password: _passwordController.text);
                     if(auth){
                       print("AUTH ");
+                       emaiil = _emailController.text;
+                       password = _passwordController.text;
                       Navigator.push(context, MaterialPageRoute(builder: (_)=> profilePage()
                         )
                       );

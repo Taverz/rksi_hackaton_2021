@@ -20,11 +20,12 @@ import 'package:firebase_core/firebase_core.dart';
 
  final FirebaseFirestore fire = FirebaseFirestore.instance;
   // final FirebaseAuth _auth = FirebaseAuth.instance;  
-
+String? emaiil , password;
   
 void main() async{
   runApp(const MyApp());
   await getInitFireBaseAndPush();
+  // setUser(ProfileData(name: "name Naem", email: "admin@gg.ru", descritption: "descritption ME"));
 }
 
 class MyApp extends StatelessWidget {
