@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/bi/auth.dart';
 import 'package:flutter_app/profile_page.dart';
@@ -15,43 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     TextEditingController _emailController = TextEditingController();
     TextEditingController _passwordController = TextEditingController();
-    // _welcome(String text) {
-    //   //надпись "добро пожаловать" и блок сверху
-    //   return Container(
-    //     height: 300,
-    //     child: Stack(children: [
-    //       Positioned(
-    //         bottom: 50,
-    //         left: 0,
-    //         right: 0,
-    //         child: Container(
-    //             //Добавление кругов
-    //             width: MediaQuery.of(context).size.width,
-    //             decoration: BoxDecoration(
-    //               color: Color.fromRGBO(92, 208, 97, 0.8),
-    //               shape: BoxShape.circle,
-    //             ),
-    //             child: Column(children: [
-    //               //круг в круге
-    //               Container(
-    //                   decoration: BoxDecoration(
-    //                       color: Color.fromRGBO(71, 238, 68, 0.8),
-    //                       shape: BoxShape.circle),
-    //                   width: 350,
-    //                   height: 400,
-    //                   //Добавление текста
-    //                   child: Align(
-    //                     alignment: Alignment.center,
-    //                     child: Text(
-    //                       text,
-    //                       style: TextStyle(color: Colors.black87, fontSize: 30),
-    //                     ),
-    //                   )),
-    //             ])),
-    //       )
-    //     ]),
-    //   );
-    // }
 
     //Текст вводимый в поля логина и пароля
     _inputText(String hint, TextEditingController controller, bool hide) {
@@ -65,20 +29,25 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
 
-    _button(String text,) {
+    _button() {
       //Виджет кнопки
       return ElevatedButton(
         onPressed: () async {
-                      print("RET");
-                      bool auth = await LoginFire(FirebaseAuth.instance).signIn(email: _emailController.text, password: _passwordController.text);
-                    if(auth){
-                      print("AUTH ");
-                      Navigator.push(context, MaterialPageRoute(builder: (_)=> profilePage()
-                        )
-                      );
-                    }else{
-                      print("Error AUTH ");
-                    }
+          print("RET");
+          bool auth = await LoginFire(FirebaseAuth.instance).signIn(
+              email: _emailController.text, password: _passwordController.text);
+          if (auth) {
+            print("AUTH ");
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => profilePage()));
+          } else {
+            showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                    elevation: 24,
+                    title: Text("Неверный логин или пароль"),
+                    backgroundColor: Colors.purple));
+          }
         },
         style: ButtonStyle(
             shape: MaterialStateProperty.resolveWith<OutlinedBorder>((_) {
@@ -86,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
               borderRadius: BorderRadius.circular(80));
         })),
 
-        child: Text(text), //Что находится кнутри кнопки
+        child: Icon(Icons.arrow_forward), //Что находится кнутри кнопки
       );
     }
 
@@ -151,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                         shape: BoxShape.circle,
                         color: Colors.blue,
                       ),
-                      child: _button("", ), //Вызов виджета кнопки
+                      child: _button(), //Вызов виджета кнопки
                       height: 60,
                       width: 60,
                     ),

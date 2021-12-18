@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'chat/chat_page.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => ChangeNotifierProvider(
       create: (context) => EventProvider(),
       child: const MaterialApp(
-        home: LoginPage(),
+        home: ChatPage(),
       ));
 }
 
