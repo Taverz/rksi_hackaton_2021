@@ -24,8 +24,8 @@ String? emaiil, password;
 void main() async {
   runApp(const MyApp());
   await getInitFireBaseAndPush();
-  setUser(ProfileData(
-      name: "Фёдоров Кирилл", email: "studen@gg.ru", descritption: "ch1ort"));
+  // setUser(ProfileData(
+  //     name: "Фёдоров Кирилл", email: "studen@gg.ru", descritption: "ch1ort"));
 }
 
 class MyApp extends StatelessWidget {

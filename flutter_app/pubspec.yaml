@@ -44,42 +44,33 @@ dependencies:
   ## text style
   google_fonts: ^2.1.0
   ## local smoll text save
-  shared_preferences: ^2.0.6
+  shared_preferences: ^2.0.11
   ## network
   http: ^0.13.3
 
   # toast - маленькое сообщение 
   fluttertoast: ^8.0.8
-
   ## Закгрузка изображения по URL 
   cached_network_image: ^3.1.0
   # Either принимает два значения ошибка и результат
-  dartz: ^0.10.0
-    
+  dartz: ^0.10.0  
   firebase_core: ^1.10.6
-  
   firebase_auth_oauth: ^1.1.0
   firebase_auth: ^3.3.4
-
   firebase_storage: ^10.2.4
-
   firebase_messaging: ^11.2.4
-
   cloud_firestore: ^3.1.5
-
-  # shared_preferences: ^2.0.11
-
   firebase_dynamic_links: ^4.0.3
-  #Календарь
   syncfusion_flutter_calendar: ^19.4.38
-  #обработка даты
   intl: ^0.17.0
-  #Чат
   flutter_chat_ui: ^1.5.3
-  #Ядро чата
   flutter_firebase_chat_core: ^1.5.1
   uuid: ^3.0.5
 
+  photo_manager: ^1.3.10
+  extended_image: ^6.0.1
+  image_editor: ^1.0.2
+  flutter_bloc: ^7.0.2
 
 
 

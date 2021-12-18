@@ -5,6 +5,7 @@ import 'package:flutter_app/bi/auth.dart';
 import 'package:flutter_app/main.dart';
 import 'package:flutter_app/profile_page.dart';
 
+var logiin =  FirebaseAuth.instance;
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -63,7 +64,12 @@ class _LoginPageState extends State<LoginPage> {
             controller: controller,
             obscureText: hide, //Скрывать ли символы
             decoration:
-                InputDecoration(hintText: hint)), //Контент внутри контейнера
+                InputDecoration(hintText: hint,
+                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
+                
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.transparent))
+                 )
+                ), //Контент внутри контейнера
       );
     }
 
@@ -72,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
       return ElevatedButton(
         onPressed: () async {
           print("RET");
-          bool auth = await LoginFire(FirebaseAuth.instance).signIn(
+          bool auth = await LoginFire(logiin).signIn(
               email: _emailController.text, password: _passwordController.text);
           if (auth) {
             print("AUTH ");

@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/calendar_page.dart';
 import 'package:flutter_app/chat/chat_page.dart';
+import 'package:flutter_app/chat/listGroup.dart';
+import 'package:flutter_app/image_chooise/profile_avatar_image/image_demo_editor.dart';
+import 'package:flutter_app/image_chooise/profile_avatar_image/pgoto_coise.dart';
 import 'package:flutter_app/main.dart';
 import 'package:flutter_app/model/event.dart';
 import 'package:uuid/uuid.dart';
@@ -30,17 +35,50 @@ class _profilePageState extends State<profilePage> {
         child: Align(
           child: Column(
             children: [
-              Container(
-                  margin: EdgeInsets.only(top: 85, bottom: 10),
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/Profile_logo.png'),
-                    ),
-                  )),
+              FutureBuilder(
+                future:  ImageSaver.getImage(),
+                builder: (context, async) {
+                  
+                  if(async.hasData && async.data != "" && async.data !=null){
+                    var img = Image(image: FileImage(File(async.data!.toString())));
+                    return GestureDetector(
+                      onTap: (){
+                        print("object pat");
+                         showMySheet( context);
+                        
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(top: 85, bottom: 10),
+                        height: 150,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          image: DecorationImage(
+                            image: img.image , 
+                          ),
+                        )),
+                    );
+                  }
+                  return GestureDetector(
+                    onTap: (){
+                        print("object pat");
+                        showMySheet( context);
+                    },
+                    child: Container(
+                        margin: EdgeInsets.only(top: 85, bottom: 10),
+                        height: 150,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/Profile_logo.png'),
+                          ),
+                        )),
+                  );
+                }
+              ),
               Text(
                 name,
                 style: TextStyle(color: Colors.white, fontSize: 20),
@@ -62,63 +100,68 @@ class _profilePageState extends State<profilePage> {
                     fit: BoxFit.cover),
               ),
               child: Column(children: [
-                Container(
-                    child: Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(top: 10),
-                      margin: EdgeInsets.only(
-                          left: 40, right: 20, top: 20, bottom: 20),
-                      height: 150,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(254, 245, 245, 1),
-                        borderRadius: BorderRadius.all(Radius.circular(40)),
-                        border: Border.all(color: Colors.black),
-                      ),
-                      child: Column(
-                        children: [
-                          Text("Сообщения"),
-                          Container(
-                            height: 100,
-                            width: 100,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image:
-                                        AssetImage('assets/images/Message.png'),
-                                    fit: BoxFit.fill)),
-                          )
-                        ],
-                      ),
-                    ),
-                    GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => CalendarWidget())),
-                        child: Container(
-                          height: 150,
-                          width: 150,
-                          padding: EdgeInsets.only(top: 10),
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(254, 245, 245, 1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(40)),
-                              border: Border.all(color: Colors.black)),
-                          child: Column(children: [
-                            Text("Календарь"),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => ListGroup())),
+                  child: Container(
+                      child: Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(top: 10),
+                        margin: EdgeInsets.only(
+                            left: 40, right: 20, top: 20, bottom: 20),
+                        height: 150,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(254, 245, 245, 1),
+                          borderRadius: BorderRadius.all(Radius.circular(40)),
+                          border: Border.all(color: Colors.black),
+                        ),
+                        child: Column(
+                          children: [
+                            Text("Сообщения"),
                             Container(
                               height: 100,
                               width: 100,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/Calendar.png'),
+                                      image:
+                                          AssetImage('assets/images/Message.png'),
                                       fit: BoxFit.fill)),
                             )
-                          ]),
-                        ))
-                  ],
-                )),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => CalendarWidget())),
+                          child: Container(
+                            height: 150,
+                            width: 150,
+                            padding: EdgeInsets.only(top: 10),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(254, 245, 245, 1),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(40)),
+                                border: Border.all(color: Colors.black)),
+                            child: Column(children: [
+                              Text("Календарь"),
+                              Container(
+                                height: 100,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/Calendar.png'),
+                                        fit: BoxFit.fill)),
+                              )
+                            ]),
+                          ))
+                    ],
+                  )),
+                ),
                 Container(
                   child: Row(
                     children: [
@@ -182,11 +225,12 @@ class _profilePageState extends State<profilePage> {
               future: getUsersData(
                   login: emaiil ?? "admin", password: password ?? "123"),
               builder: (context, async) {
-                String name = "Курбатова Анастасия";
+                String name = "Имя";
 
             if( profileDataCurrent!= null){
               print(profileDataCurrent!.name);
                 name = profileDataCurrent!.name;
+                
             }
             return _profileInfo(name);
           }
@@ -195,6 +239,14 @@ class _profilePageState extends State<profilePage> {
     ));
   }
 }
+
+showMySheet(BuildContext context) {
+                          showModalBottomSheet(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                              ),
+                              context: context,
+                              builder: (context) => PhotoChoise());}
 
 
 
@@ -209,6 +261,7 @@ Future<ProfileData?> getUsersData({required String login , required String passw
    Map? maps = querySnapshot.data();
    if(maps != null){
      profileDataCurrent = ProfileData.fromMap(maps);
+     print(profileDataCurrent!.email);
    }
   
   //  profileDataCurrent = profileData;
@@ -276,9 +329,9 @@ class ProfileData {
 
     factory ProfileData.fromMap(Map map){
     return ProfileData(
-      name: map["name"] ,
-      email: map["email"] ,
-      descritption: map["descritption"] ,
+      name: map["name"] .toString(),
+      email: map["email"] .toString(),
+      descritption: map["descritption"].toString() ,
     );
     }
 
