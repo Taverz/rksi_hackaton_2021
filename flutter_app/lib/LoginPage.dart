@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ProfilePage.dart';
+import 'package:flutter_app/bi/auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -75,13 +78,25 @@ class _LoginPageState extends State<LoginPage> {
               Positioned(
                 top: 20,
                 right: 75,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(80)),
-                    color: Colors.blue,
+                child: GestureDetector(
+                  onTap: () async {
+                    bool auth = await LoginFire(FirebaseAuth.instance).signIn(email: _emailController, password: _passwordController);
+                    if(auth){
+                      Navigator.push(context, MaterialPageRoute(builder: (_)=> profilePage()
+                        )
+                      );
+                    }else{
+                      print("Error AUTH ");
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(80)),
+                      color: Colors.blue,
+                    ),
+                    height: 60,
+                    width: 60,
                   ),
-                  height: 60,
-                  width: 60,
                 ),
               )
             ],
