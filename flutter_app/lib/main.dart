@@ -32,11 +32,11 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LoginPage(),
-    );
-  }
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+      create: (context) => EventProvider(),
+      child: const MaterialApp(
+        home: LoginPage(),
+      ));
 }
 
 
@@ -45,18 +45,16 @@ Future getInitFireBaseAndPush() async {
 
   await Firebase.initializeApp();
 
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
 
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('A new onMessage event was published! ${message.data}');
-      newPushMessage(message.data);
-    });
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print('A new onMessage event was published! ${message.data}');
+    newPushMessage(message.data);
+  });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('A new onMessageOpenedApp event was published! ${message.data}');

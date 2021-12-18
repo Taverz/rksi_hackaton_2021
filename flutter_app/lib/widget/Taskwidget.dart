@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter_app/provider/event_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
+import 'package:flutter_app/Calendar/viev_event_page.dart';
 
 class Tasks extends StatefulWidget {
   const Tasks({Key? key}) : super(key: key);
@@ -39,13 +40,13 @@ class _TasksState extends State<Tasks> {
             color: Colors.purple.withOpacity(0.5),
           ),
           //Недоделанный переход на мероприятие
-          // onTap: (details) {
-          //   if (details.appointments == null) return;
-          //   final event = details.appointments!.first;
+          //   onTap: (details) {
+          //     if (details.appointments == null) return;
+          //     final event = details.appointments!.first;
 
-          //   Navigator.of(context).push(MaterialPageRoute(
-          //       builder: (context) => ViewEvent(event: event)));
-          // },
+          //     Navigator.of(context).push(MaterialPageRoute(
+          //         builder: (context) => ViewEvent(event: event)));
+          //   },
         ));
   }
 
