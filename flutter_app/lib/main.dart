@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => ChangeNotifierProvider(
       create: (context) => EventProvider(),
       child: const MaterialApp(
-        home: ChatPage(),
+        home: LoginPage(),
       ));
 }
 
