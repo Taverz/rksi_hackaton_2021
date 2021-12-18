@@ -1,3 +1,5 @@
+import 'package:flutter_app/calendar_page.dart';
+
 import 'provider/event_provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'model/event.dart';
@@ -190,12 +192,19 @@ class _CreateEventPageState extends State<CreateEventPage> {
         onTap: onClicked,
       );
   Future saveForm() async {
+    bool allday=true;
+    // await updateCalendare(Event(
+    //   description:  titleController.text.toString(),
+    //   name: titleController.text.toString() , 
+    //   froml:from , to: to, 
+    //   allDay: allday 
+    // ));
     final event = Event(
-        name: titleController.text,
-        description: "Description",
-        froml: from,
-        to: to,
-        allDay: false);
+      description:  titleController.text.toString(),
+      name: titleController.text.toString() , 
+      froml:from , to: to, 
+      allDay: allday 
+    );
     final provider = Provider.of<EventProvider>(context, listen: false);
     provider.addEvent(event);
 
