@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/bi/auth.dart';
+import 'package:flutter_app/profile_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -62,12 +65,20 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
 
-    _button(String text, void func()) {
+    _button(String text,) {
       //Виджет кнопки
       return ElevatedButton(
-        onPressed: () {
-          //При нажатии запускается функция
-          func();
+        onPressed: () async {
+                      print("RET");
+                      bool auth = await LoginFire(FirebaseAuth.instance).signIn(email: _emailController.text, password: _passwordController.text);
+                    if(auth){
+                      print("AUTH ");
+                      Navigator.push(context, MaterialPageRoute(builder: (_)=> profilePage()
+                        )
+                      );
+                    }else{
+                      print("Error AUTH ");
+                    }
         },
         style: ButtonStyle(
             shape: MaterialStateProperty.resolveWith<OutlinedBorder>((_) {
@@ -122,14 +133,28 @@ class _LoginPageState extends State<LoginPage> {
                   //кнопка авторизации
                   top: 20,
                   right: 25,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.blue,
+                  child: GestureDetector(
+                    // onTap: ()async {
+                    //   print("RET");
+                    //   bool auth = await LoginFire(FirebaseAuth.instance).signIn(email: _emailController, password: _passwordController);
+                    // if(auth){
+                    //   print("AUTH ");
+                    //   // Navigator.push(context, MaterialPageRoute(builder: (_)=> profilePage()
+                    //   //   )
+                    //   // );
+                    // }else{
+                    //   print("Error AUTH ");
+                    // }
+                    // },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.blue,
+                      ),
+                      child: _button("", ), //Вызов виджета кнопки
+                      height: 60,
+                      width: 60,
                     ),
-                    child: _button("", func), //Вызов виджета кнопки
-                    height: 60,
-                    width: 60,
                   )),
             ],
           ));
