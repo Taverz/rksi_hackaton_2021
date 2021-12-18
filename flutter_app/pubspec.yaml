@@ -70,14 +70,12 @@ dependencies:
   # shared_preferences: ^2.0.11
 
   firebase_dynamic_links: ^4.0.3
-
-  firebase_helpers: ^0.5.0
-
   #Календарь
   syncfusion_flutter_calendar: ^19.4.38
   #обработка даты
   intl: ^0.17.0
-
+  uuid: ^3.0.5
+  
 
 dev_dependencies:
   flutter_test:
@@ -89,10 +87,10 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
-
+ 
   
 
-
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

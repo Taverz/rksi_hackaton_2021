@@ -5,6 +5,7 @@ import 'package:flutter_app/model/event.dart';
 import 'package:flutter_app/provider/event_provider.dart';
 import 'package:flutter_app/widget/Taskwidget.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:uuid/uuid.dart';
 import 'creating_event_page.dart';
 import 'event_data_source.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,14 @@ class CalendarWidget extends StatelessWidget {
       body: FutureBuilder(
         future: getCAlendare(),
         builder: (context, snapshot) {
+          List<Event> getData = [];
+          if(snapshot.hasData && snapshot.data != null){
+              getData = allData_calendare!;
+              // getData = snapshot.data as List<Event> ;
+              envents.addAll(allData_calendare!);
+               print("PPPPP "+allData_calendare!.length.toString());
+          }
+          print("PPPPP22 "+getData.length.toString());
           return Center(
             child: SfCalendar(
               todayHighlightColor: Colors.green,
@@ -56,15 +65,30 @@ class CalendarWidget extends StatelessWidget {
 }
 
 List<QueryDocumentSnapshot<Map<String, dynamic>>>? calendare ;
-Future getCAlendare() async {
- await fire.collection('df5239jdsf3').
-   get().then((value ){
-    calendare = value.docs ;
-  });
+List<Event>? allData_calendare;
+Future<List<Event>?> getCAlendare() async {
+   QuerySnapshot querySnapshot = await fire.collection('df5239jdsf3').
+   get()
+   ;
+  //  List<Event> 
+  //  allData
+  var tte =querySnapshot.docs;
+   allData_calendare = querySnapshot.docs.map((doc ) {
+    //var trr = doc.data();
+    //print("DOC"+doc["update"].toString());
+    return Event.fromMap(doc["update"] as Map);
+   }).toList();
+  //  .then((value ){
+  //   calendare = value.docs.toList() ;
+  // });
 
-  var tt = calendare![0].data();
-  Map<String, dynamic> mapp = tt["update"];
-  Event.fromMap(mapp);
+  // var allData = calendare![0]!.docs().map((doc) => doc.data()).toList();
+  //   List allDaata = calendare.;
+  //  calendare = calendare;
+  
+  // if(calendare != null)
+  // Event.fromMap(calendare);
+  return allData_calendare;
 }
 
 // deleteCalendare()async {
@@ -72,6 +96,10 @@ Future getCAlendare() async {
 // }
 
 updateCalendare(Event data)async {
- await fire.collection('df5239jdsf3').doc("calen").update({"update":data.toMap()});
+ 
+
+  var uuid = Uuid();
+  String random = uuid.v1();
+ await fire.collection('df5239jdsf3').doc(random).set({"update":data.toMap()}); // update({"update":data.toMap()});
 }
 

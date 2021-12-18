@@ -193,18 +193,18 @@ class _CreateEventPageState extends State<CreateEventPage> {
       );
   Future saveForm() async {
     bool allday=true;
-    await updateCalendare(Event(
-      description:  "Description",
-      name:"" , 
+    // await updateCalendare(Event(
+    //   description:  titleController.text.toString(),
+    //   name: titleController.text.toString() , 
+    //   froml:from , to: to, 
+    //   allDay: allday 
+    // ));
+    final event = Event(
+      description:  titleController.text.toString(),
+      name: titleController.text.toString() , 
       froml:from , to: to, 
       allDay: allday 
-    ));
-    final event = Event(
-        name: titleController.text,
-        description: "Description",
-        froml: from,
-        to: to,
-        allDay: allday);
+    );
     final provider = Provider.of<EventProvider>(context, listen: false);
     provider.addEvent(event);
 

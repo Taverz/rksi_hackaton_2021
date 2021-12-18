@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Event {
   final String name;
@@ -16,19 +17,37 @@ class Event {
 
   factory Event.fromMap(Map map){
     return Event(
-      froml:map["froml"],
-      to: map["to"],
-      allDay: map["allDay"],
-      name:map["date_num"] , 
-    description: map["descritption"]
+      froml:DateTime.parse(map["froml"]),
+      to: DateTime.parse(map["to"]),
+      allDay: false , //map["allDay"],
+      name:map["date_num"] ?? "", 
+    description: map["descritption"] ?? ""
     );
   }
 
   Map<String, dynamic> toMap(){
+    String modifiedReleaseDate;
+    if (to != null ) {
+      DateTime UTCReleaseDateTime = to.toUtc();
+      modifiedReleaseDate =
+          DateFormat('yyyy-MM-dd HH:mm:ss').format(UTCReleaseDateTime);
+    } else {
+      modifiedReleaseDate =  "";
+    }
+
+    String modifiedReleaseDate2;
+    if (froml != null ) {
+      DateTime UTCReleaseDateTime = froml.toUtc();
+      modifiedReleaseDate2 =
+          DateFormat('yyyy-MM-dd HH:mm:ss').format(UTCReleaseDateTime);
+    } else {
+      modifiedReleaseDate2 =  "";
+    }
     return {
       "date_num":name,
-      "to":to,
+      "to":modifiedReleaseDate,
       "allDay":allDay,
+      "froml":modifiedReleaseDate2,
       "name":name,
       "description":description,
     };

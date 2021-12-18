@@ -1,9 +1,10 @@
+import 'package:flutter_app/calendar_page.dart';
 import 'package:flutter_app/model/event.dart';
 import 'package:flutter_app/utils.dart';
 import 'package:flutter/cupertino.dart';
 
 class EventProvider extends ChangeNotifier {
-  final List<Event> _events = [];
+   List<Event> _events = [];
   DateTime _selectedDate = DateTime.now();
 
   DateTime get selctedDate => _selectedDate;
@@ -14,7 +15,16 @@ class EventProvider extends ChangeNotifier {
 
   List<Event> get events => _events;
   void addEvent(Event event) {
-    _events.add(event);
+    // _events.add(event);
+    bool allday=true;
+    updateCalendare(event);
+    notifyListeners();
+  }
+
+
+
+  void addEventList(List<Event> eventList) {
+    _events = eventList;
     notifyListeners();
   }
 }
