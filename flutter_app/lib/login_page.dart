@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/bi/auth.dart';
 import 'package:flutter_app/main.dart';
@@ -70,18 +71,21 @@ class _LoginPageState extends State<LoginPage> {
       //Виджет кнопки
       return ElevatedButton(
         onPressed: () async {
-                      print("RET");
-                      bool auth = await LoginFire(FirebaseAuth.instance).signIn(email: _emailController.text, password: _passwordController.text);
-                    if(auth){
-                      print("AUTH ");
-                       emaiil = _emailController.text;
-                       password = _passwordController.text;
-                      Navigator.push(context, MaterialPageRoute(builder: (_)=> profilePage()
-                        )
-                      );
-                    }else{
-                      print("Error AUTH ");
-                    }
+          print("RET");
+          bool auth = await LoginFire(FirebaseAuth.instance).signIn(
+              email: _emailController.text, password: _passwordController.text);
+          if (auth) {
+            print("AUTH ");
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => profilePage()));
+          } else {
+            showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                    elevation: 24,
+                    title: Text("Неверный логин или пароль"),
+                    backgroundColor: Colors.purple));
+          }
         },
         style: ButtonStyle(
             shape: MaterialStateProperty.resolveWith<OutlinedBorder>((_) {

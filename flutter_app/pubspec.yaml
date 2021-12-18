@@ -74,8 +74,12 @@ dependencies:
   syncfusion_flutter_calendar: ^19.4.38
   #обработка даты
   intl: ^0.17.0
+  #Чат
+  flutter_chat_ui: ^1.5.3
+  #Ядро чата
+  flutter_firebase_chat_core: ^1.5.1
   uuid: ^3.0.5
-  
+
 
 dev_dependencies:
   flutter_test:
