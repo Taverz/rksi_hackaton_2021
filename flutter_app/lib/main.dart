@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/LoginPage.dart';
-import 'package:flutter_app/ProfilePage.dart';
+import 'package:flutter_app/login_page.dart';
+import 'package:flutter_app/profile_page.dart';
+import 'package:flutter_app/calendar_page.dart';
+import 'package:flutter_app/provider/event_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,9 +14,9 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: profilePage(),
-    );
-  }
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+      create: (context) => EventProvider(),
+      child: const MaterialApp(
+        home: CalendarWidget(),
+      ));
 }
