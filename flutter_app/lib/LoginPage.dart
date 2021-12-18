@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_app/ProfilePage.dart';
+import 'package:flutter_app/profile_page.dart';
 import 'package:flutter_app/bi/auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -80,13 +80,12 @@ class _LoginPageState extends State<LoginPage> {
                 right: 75,
                 child: GestureDetector(
                   onTap: () async {
-                    bool auth = await LoginFire(FirebaseAuth.instance).signIn(email: _emailController, password: _passwordController);
-                    if(auth){
-                      print("AUTH ");
-                      // Navigator.push(context, MaterialPageRoute(builder: (_)=> profilePage()
-                      //   )
-                      // );
-                    }else{
+                    bool auth = await LoginFire(FirebaseAuth.instance).signIn(
+                        email: _emailController, password: _passwordController);
+                    if (auth) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => profilePage()));
+                    } else {
                       print("Error AUTH ");
                     }
                   },

@@ -70,7 +70,11 @@ dependencies:
   # shared_preferences: ^2.0.11
 
   firebase_dynamic_links: ^4.0.3
-
+  #Календарь
+  syncfusion_flutter_calendar: ^19.4.38
+  #обработка даты
+  intl: ^0.17.0
+  
 
 dev_dependencies:
   flutter_test:
@@ -82,14 +86,10 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
-  #provider
-  provider: ^6.0.1
-  #Календарь
-  syncfusion_flutter_calendar: ^19.4.38
+ 
   
 
-  #обработка даты
-  intl: ^0.17.0
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -107,6 +107,11 @@ flutter:
     - assets/images/Background.png
     - assets/images/Background_profile_up.png
     - assets/images/Background_profile_bottom.png
+    - assets/images/Help.png
+    - assets/images/Message.png
+    - assets/images/Profile_logo.png
+    - assets/images/Calendar.png
+    - assets/images/Events.png
     # - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
