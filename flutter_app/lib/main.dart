@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/LoginPage.dart';
-import 'package:flutter_app/ProfilePage.dart';
+import 'package:flutter_app/login_page.dart';
+import 'package:flutter_app/profile_page.dart';
+import 'package:flutter_app/calendar_page.dart';
+import 'package:flutter_app/provider/event_provider.dart';
+import 'package:provider/provider.dart';
 
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -55,7 +58,7 @@ Future getInitFireBaseAndPush() async {
       newPushMessage(message.data);
     });
 
-    
+
 
     // Set the background messaging handler early on, as a named top-level function
     FirebaseMessaging.onBackgroundMessage(myBackgroundHandler);
@@ -69,17 +72,17 @@ newPushMessage(Map<String, dynamic> message) {
   print(message.toString());
   late String msgOSType = '';
   if (message.containsKey('data')) {
-  
-    
+
+
   }else {
-    
+
   }
- 
+
 
   switch (msgOSType) {
     case 'notify_type':
       {
-       
+
       }
       break;
   }
