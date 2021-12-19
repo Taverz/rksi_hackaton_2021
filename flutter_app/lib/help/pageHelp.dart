@@ -38,7 +38,8 @@ class _PageHelpState extends State<PageHelp> {
            return ListView.builder(
               itemCount:ter.length,
               itemBuilder: (context, index){
-                return _itemGroupList(title:ter[index].data() != null? ter[index].data()["name"] ?? "" :"");
+                return _itemGroupList(title:ter[index].data() != null? ter[index].data()["name"] ?? "" :"", 
+                id: ter[index].data() != null? ter[index].data()["id"] ?? "" :"" );
               }
             );
          }
@@ -56,43 +57,49 @@ class _PageHelpState extends State<PageHelp> {
         )
     );
   }
-  _itemGroupList({required String title}) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-      child: GestureDetector(
-        // onTap: (){
+  _itemGroupList({required String title,required String id}) {
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (_)=>ChatHelp(groupName: title,groupChatId:id ,)));
+        
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        child: GestureDetector(
+          // onTap: (){
 
-        // },
-        child: Container(
-            height: 125,
-            decoration: BoxDecoration(
-              // borderRadius: BorderRadius.all(
-              //   Radius.circular(80),
-              // ),
-              color: Colors.purple[100],
-            ),
-            padding: EdgeInsets.all(15),
-            child: Row(
-              children: [
-                Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color:
-                        Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                            .withOpacity(1.0),
-                    shape: BoxShape.circle,
+          // },
+          child: Container(
+              height: 125,
+              decoration: BoxDecoration(
+                // borderRadius: BorderRadius.all(
+                //   Radius.circular(80),
+                // ),
+                color: Colors.purple[100],
+              ),
+              padding: EdgeInsets.all(15),
+              child: Row(
+                children: [
+                  Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      color:
+                          Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                              .withOpacity(1.0),
+                      shape: BoxShape.circle,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal, child: Text(title)),
-                ),
-              ],
-            )),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal, child: Text(title)),
+                  ),
+                ],
+              )),
+        ),
       ),
     );
   }

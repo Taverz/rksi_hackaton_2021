@@ -91,8 +91,8 @@ class ChatHelp extends StatelessWidget {
               ),
             ),
             Container(
-              height: size.height / 10,
-              width: size.width,
+              height: size.height / 90,
+              width: size.width/ 50,
               alignment: Alignment.center,
               child: Container(
                 height: size.height / 12,
@@ -103,17 +103,19 @@ class ChatHelp extends StatelessWidget {
                     Container(
                       height: size.height / 17,
                       width: size.width / 1.3,
-                      child: TextField(
-                        controller: _message,
-                        decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.photo),
-                            ),
-                            hintText: "Send Message",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            )),
+                      child: Material(
+                        child: TextField(
+                          controller: _message,
+                          decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.photo),
+                              ),
+                              hintText: "Send Message",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              )),
+                        ),
                       ),
                     ),
                     IconButton(
