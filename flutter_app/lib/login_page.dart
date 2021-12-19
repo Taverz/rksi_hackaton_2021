@@ -73,8 +73,9 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
 
-    _button(String text,) {
+    _button() {
       //Виджет кнопки
+
       return ElevatedButton(
         onPressed: () async {
           print("RET");
@@ -101,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
               borderRadius: BorderRadius.circular(80));
         })),
 
-        child: Text(text), //Что находится кнутри кнопки
+        child: Icon(Icons.arrow_forward), //Что находится кнутри кнопки
       );
     }
 
@@ -166,7 +167,9 @@ class _LoginPageState extends State<LoginPage> {
                         shape: BoxShape.circle,
                         color: Colors.blue,
                       ),
-                      child: _button("", ), //Вызов виджета кнопки
+                      child: _button(),
+
+                      //Вызов виджета кнопки
                       height: 60,
                       width: 60,
                     ),
