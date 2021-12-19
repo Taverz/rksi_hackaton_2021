@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/login_page.dart';
+import 'package:flutter_app/main.dart';
 
 class GroupChat extends StatelessWidget {
   final String groupChatId, groupName;
@@ -16,7 +17,7 @@ class GroupChat extends StatelessWidget {
   void onSendMessage() async {
     if (_message.text.isNotEmpty) {
       Map<String, dynamic> chatData = {
-        "sendBy": logiin.currentUser!.displayName,
+        "sendBy": nameUser, //logiin.currentUser!.displayName,
         "message": _message.text,
         "type": "text",
         "time": FieldValue.serverTimestamp(),
@@ -126,7 +127,7 @@ class GroupChat extends StatelessWidget {
       if (chatMap['type'] == "text") {
         return Container(
           width: size.width,
-          alignment: chatMap['sendBy'] == _auth.currentUser!.displayName
+          alignment: chatMap['sendBy'] ==  nameUser//_auth.currentUser!.displayName
               ? Alignment.centerRight
               : Alignment.centerLeft,
           child: Container(

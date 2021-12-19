@@ -1,5 +1,5 @@
 
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/chat/group_chat.dart';
 import 'package:flutter_app/main.dart';
 import 'package:uuid/uuid.dart';
-
+final FirebaseFirestore _fire = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 class ListGroup extends StatefulWidget {
   // final String groupName;
   // final String groupId;
@@ -125,8 +126,7 @@ class _ListGroupState extends State<ListGroup> {
     // });
   }
 
-  final FirebaseFirestore _fire = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  
   List<QueryDocumentSnapshot<Map<String, dynamic>>> listGroup = [];
 
 Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> listGroupChat() async {

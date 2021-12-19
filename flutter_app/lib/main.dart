@@ -20,6 +20,7 @@ import 'chat/chat_page.dart';
 final FirebaseFirestore fire = FirebaseFirestore.instance;
 // final FirebaseAuth _auth = FirebaseAuth.instance;
 String? emaiil, password;
+String? nameUser, permission;
 
 void main() async {
   runApp(const MyApp());
@@ -69,6 +70,7 @@ newPushMessage(Map<String, dynamic> message) {
   if (message.containsKey('data')) {
   } else {}
 
+  
   switch (msgOSType) {
     case 'notify_type':
       {}

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/calendar_page.dart';
 import 'package:flutter_app/chat/chat_page.dart';
 import 'package:flutter_app/chat/listGroup.dart';
+import 'package:flutter_app/event_admin_page/event_page.dart';
 import 'package:flutter_app/image_chooise/profile_avatar_image/image_demo_editor.dart';
 import 'package:flutter_app/image_chooise/profile_avatar_image/pgoto_coise.dart';
 import 'package:flutter_app/main.dart';
@@ -165,28 +166,33 @@ class _profilePageState extends State<profilePage> {
                 Container(
                   child: Row(
                     children: [
-                      Container(
-                        padding: EdgeInsets.only(top: 10),
-                        margin: EdgeInsets.only(
-                            left: 40, right: 20, top: 20, bottom: 20),
-                        height: 150,
-                        width: 150,
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(254, 245, 245, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(40)),
-                            border: Border.all(color: Colors.black)),
-                        child: Column(
-                          children: [
-                            Text("Мероприятия"),
-                            Container(
-                                height: 100,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/Events.png'),
-                                        fit: BoxFit.fill))),
-                          ],
+                      GestureDetector(
+                         onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => EventPage())),
+                        child: Container(
+                          padding: EdgeInsets.only(top: 10),
+                          margin: EdgeInsets.only(
+                              left: 40, right: 20, top: 20, bottom: 20),
+                          height: 150,
+                          width: 150,
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(254, 245, 245, 1),
+                              borderRadius: BorderRadius.all(Radius.circular(40)),
+                              border: Border.all(color: Colors.black)),
+                          child: Column(
+                            children: [
+                              Text("Мероприятия"),
+                              Container(
+                                  height: 100,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/images/Events.png'),
+                                          fit: BoxFit.fill))),
+                            ],
+                          ),
                         ),
                       ),
                       Container(
@@ -229,7 +235,9 @@ class _profilePageState extends State<profilePage> {
 
             if( profileDataCurrent!= null){
               print(profileDataCurrent!.name);
-                name = profileDataCurrent!.name;
+                nameUser = profileDataCurrent!.name;
+                name = nameUser!;
+                permission =profileDataCurrent!.permisiion;
                 
             }
             return _profileInfo(name);
@@ -261,6 +269,8 @@ Future<ProfileData?> getUsersData({required String login , required String passw
    Map? maps = querySnapshot.data();
    if(maps != null){
      profileDataCurrent = ProfileData.fromMap(maps);
+     permission = profileDataCurrent!.permisiion;
+     nameUser = profileDataCurrent!.name;
      print(profileDataCurrent!.email);
    }
   
@@ -308,11 +318,15 @@ class ProfileData {
   String name;
   String email;
   String descritption;
+  String permisiion;
+  String groupList;
 
   ProfileData({
     required this.name,
     required this.email,
     required this.descritption,
+    required this.permisiion,
+    required this.groupList,
   });
 
    Map<String, dynamic> toMap(){
@@ -323,6 +337,8 @@ class ProfileData {
       // "froml":modifiedReleaseDate2,
       "email":email,
       "descritption":name,
+      "permission":permisiion,
+      "groupList":groupList,
       // "description":description,
     };
    }
@@ -332,6 +348,8 @@ class ProfileData {
       name: map["name"] .toString(),
       email: map["email"] .toString(),
       descritption: map["descritption"].toString() ,
+       permisiion: map["permission"].toString() ,
+        groupList: map["groupList"].toString() ,
     );
     }
 
