@@ -19,6 +19,7 @@ class _TasksState extends State<Tasks> {
   Widget build(BuildContext context) {
     final provider = Provider.of<EventProvider>(context);
     final selectedEvent = provider.eventsSelected;
+    // var tt = selectedEvent[0].id;
 
     if (selectedEvent.isEmpty) {
       //Если нет мероприятий
@@ -55,6 +56,7 @@ class _TasksState extends State<Tasks> {
     CalendarAppointmentDetails details,
   ) {
     final event = details.appointments.first;
+    // var id = details.;
     return GestureDetector(
       onTap: () => showDialog(
           context: context,

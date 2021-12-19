@@ -7,10 +7,12 @@ import 'package:flutter_app/calendar_page.dart';
 import 'package:flutter_app/chat/chat_page.dart';
 import 'package:flutter_app/chat/listGroup.dart';
 import 'package:flutter_app/event_admin_page/event_page.dart';
+import 'package:flutter_app/help/pageHelp.dart';
 import 'package:flutter_app/image_chooise/profile_avatar_image/image_demo_editor.dart';
 import 'package:flutter_app/image_chooise/profile_avatar_image/pgoto_coise.dart';
 import 'package:flutter_app/main.dart';
 import 'package:flutter_app/model/event.dart';
+import 'package:flutter_app/widget/qr_code.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:uuid/uuid.dart';
 
@@ -106,7 +108,7 @@ class _profilePageState extends State<profilePage> {
     _contentInfo() {
       return SingleChildScrollView(
           child: Container(
-              height: MediaQuery.of(context).size.height / 1.5,
+              height: MediaQuery.of(context).size.height ,
               decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
@@ -207,31 +209,62 @@ class _profilePageState extends State<profilePage> {
                               ],
                             ),
                           )),
-                      Container(
-                          padding: EdgeInsets.only(top: 10),
-                          height: 150,
-                          width: 150,
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(254, 245, 245, 1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(40)),
-                              border: Border.all(color: Colors.black)),
-                          child: Column(
-                            children: [
-                              Text("Помощь"),
-                              Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/Help.png'),
-                                          fit: BoxFit.fill))),
-                            ],
-                          )),
+                      GestureDetector(
+                         onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => PageHelp())),
+                        child: Container(
+                            padding: EdgeInsets.only(top: 10),
+                            height: 150,
+                            width: 150,
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(254, 245, 245, 1),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(40)),
+                                border: Border.all(color: Colors.black)),
+                            child: Column(
+                              children: [
+                                Text("Помощь"),
+                                Container(
+                                    height: 100,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/images/Help.png'),
+                                            fit: BoxFit.fill))),
+                              ],
+                            )),
+                      ),
                     ],
                   ),
                 ),
+                GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => QRViewExample())),
+                          child: Container(
+                            height: 150,
+                            width: 150,
+                            padding: EdgeInsets.only(top: 10),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(254, 245, 245, 1),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(40)),
+                                border: Border.all(color: Colors.black)),
+                            child: Column(children: [
+                              Text("QR"),
+                              Container(
+                                height: 100,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/Calendar.png'),
+                                        fit: BoxFit.fill)),
+                              )
+                            ]),
+                          ))
               ])));
     }
 
