@@ -1,4 +1,3 @@
-
 // import 'dart:ffi';
 
 // import 'dart:ffi';
@@ -22,106 +21,142 @@ class ListGroup extends StatefulWidget {
 }
 
 class _ListGroupState extends State<ListGroup> {
-
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     // getGroupChat();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Групповые чаты"),
+        title: Text("Чаты"),
+        actions: <Widget>[
+          IconButton(
+              onPressed: () async {
+                showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                        content: TextField(controller: controller),
+                        actions: [
+                          FloatingActionButton(onPressed: () async {
+                            await createChatGroup(controller.text);
+                          })
+                        ],
+                        elevation: 24,
+                        title: Text("Введите название чата"),
+                        backgroundColor: Colors.deepPurple[400]));
+              },
+              icon: Icon(Icons.add_outlined))
+        ],
+        backgroundColor: Colors.purple,
       ),
-        body: FutureBuilder(
-            future: listGroupChat(),
+      body: FutureBuilder(
+          future: listGroupChat(),
           builder: (context, async) {
-              List<QueryDocumentSnapshot<Map<String, dynamic>>> groupListWW = [];
-            if(async.data != null && async.hasData){
-             groupListWW =  async.data as List<QueryDocumentSnapshot<Map<String, dynamic>>> ;
-             print("NAME GROUP "+groupListWW.length.toString());
-            //  print("NAME GROUP "+groupListWW[0]["name"]);
-             
+            List<QueryDocumentSnapshot<Map<String, dynamic>>> groupListWW = [];
+            if (async.data != null && async.hasData) {
+              groupListWW = async.data
+                  as List<QueryDocumentSnapshot<Map<String, dynamic>>>;
+              print("NAME GROUP " + groupListWW.length.toString());
+              //  print("NAME GROUP "+groupListWW[0]["name"]);
+
             }
-            
+
             return ListView.builder(
-              physics: BouncingScrollPhysics(),
-              itemCount: groupListWW.length,
-              itemBuilder: (context , index){
-                return GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (_)=>
-                      GroupChat(groupChatId:groupListWW[index]["id"] ,groupName: groupListWW[index]["name"],)
-                    ));
-                    
-                  },
-                  child: _itemGroupList(title: groupListWW[index]["name"])
-                );
-                // return _itemGroupList(title: groupListWW[index]["name"]);
-                // return Container(child: Text(groupListWW[index]["name"]),);
-              });
-          }
-        ),
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add_outlined),
-            backgroundColor: Colors.purple,
-            onPressed: () async{
-               await createChatGroup();
-            },
-            tooltip: "Create Group",
-            // Navigator.of(context)
-            //       .push(MaterialPageRoute(builder: (context) => CreateEventPage())
-                ),
-       );
-    
-    
+                physics: BouncingScrollPhysics(),
+                itemCount: groupListWW.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => GroupChat(
+                                      groupChatId: groupListWW[index]["id"],
+                                      groupName: groupListWW[index]["name"],
+                                    )));
+                      },
+                      child: _itemGroupList(title: groupListWW[index]["name"]));
+                  // return _itemGroupList(title: groupListWW[index]["name"]);
+                  // return Container(child: Text(groupListWW[index]["name"]),);
+                });
+          }),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.add_outlined),
+      //   backgroundColor: Colors.purple,
+      //   onPressed: () async {
+      //     await createChatGroup();
+      //   },
+      //   tooltip: "Create Group",
+      //   // Navigator.of(context)
+      //   //       .push(MaterialPageRoute(builder: (context) => CreateEventPage())
+      // ),
+    );
   }
 
-  _itemGroupList({required String title}){
+  _itemGroupList({required String title}) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       child: GestureDetector(
         // onTap: (){
-          
+
         // },
         child: Container(
-          color: Colors.green,
-          padding: EdgeInsets.all(15),
-          child: Text(title),
-        ),
+            height: 125,
+            decoration: BoxDecoration(
+              // borderRadius: BorderRadius.all(
+              //   Radius.circular(80),
+              // ),
+              color: Colors.purple[100],
+            ),
+            padding: EdgeInsets.all(15),
+            child: Row(
+              children: [
+                Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color:
+                        Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                            .withOpacity(1.0),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal, child: Text(title)),
+                ),
+              ],
+            )),
       ),
     );
   }
 
-  Future createChatGroup() async {
+  Future createChatGroup(String title) async {
     String groupId = Uuid().v1();
     String groupName = title;
 
     await _fire.collection('groupchat').doc(groupId).set({
-      "name": "Name_$groupId",
+      "name": groupName,
       "id": groupId,
     });
 
-    
-      String uid = groupId;
+    String uid = groupId;
 
-
-      await _fire
-          .collection('groupchat')
-          .doc(uid)
-          .collection('chats')
-          // .doc(groupId)
-          .add({
+    await _fire.collection('groupchat').doc(uid).collection('chats')
+        // .doc(groupId)
+        .add({
       "message": "$uid createGroup!!",
       "type": "text",
     });
 
-    setState(() {
-      
-    });
+    setState(() {});
 
-      //     .set({
-      //   "name":"Name_$groupId",
-      //   "id": groupId,
-      // });
-    
+    //     .set({
+    //   "name":"Name_$groupId",
+    //   "id": groupId,
+    // });
 
     // await _fire.collection('groupchat').doc(groupId).collection('chats').add({
     //   "message": "${_auth.currentUser!.displayName} createGroup!!",
@@ -133,48 +168,44 @@ class _ListGroupState extends State<ListGroup> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   List<QueryDocumentSnapshot<Map<String, dynamic>>> listGroup = [];
 
-Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> listGroupChat() async {
-  String _mm = _auth.currentUser!.uid;
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
+      listGroupChat() async {
+    String _mm = _auth.currentUser!.uid;
 
-  await _fire.collection('groupchat')
-  .get().then((value){
-    listGroup = value.docs;
-  });
-  
-return listGroup;
-}
-List<QueryDocumentSnapshot<Map<String, dynamic>>> groupList = [];
+    await _fire.collection('groupchat').get().then((value) {
+      listGroup = value.docs;
+    });
 
-Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getGroupChat() async {
-  String uid = _auth.currentUser!.uid;
-
- await fire
-        .collection('groupchat').doc().get().then((value2) async{
-          print("WWWW");
-          print(value2.id);
-                await _fire
-              .collection('groupchat')
-              .doc(value2.id)
-              .collection('chats')
-              .get()
-              .then((value) {
-                print("DDDDD");
-                // setState(() {
-                  groupList = value.docs;
-                // });
-              });
-        }
-        );
-
-
-        // _fire
-        //             .collection('groupchat')
-        //             .doc(groupChatId)
-        //             .collection('chats')
-
-    
-    return groupList;  
-
+    return listGroup;
   }
 
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> groupList = [];
+
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
+      getGroupChat() async {
+    String uid = _auth.currentUser!.uid;
+
+    await fire.collection('groupchat').doc().get().then((value2) async {
+      print("WWWW");
+      print(value2.id);
+      await _fire
+          .collection('groupchat')
+          .doc(value2.id)
+          .collection('chats')
+          .get()
+          .then((value) {
+        print("DDDDD");
+        // setState(() {
+        groupList = value.docs;
+        // });
+      });
+    });
+
+    // _fire
+    //             .collection('groupchat')
+    //             .doc(groupChatId)
+    //             .collection('chats')
+
+    return groupList;
+  }
 }

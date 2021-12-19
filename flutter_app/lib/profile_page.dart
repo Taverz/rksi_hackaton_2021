@@ -39,49 +39,50 @@ class _profilePageState extends State<profilePage> {
           child: Column(
             children: [
               FutureBuilder(
-                future:  ImageSaver.getImage(),
-                builder: (context, async) {
-                  
-                  if(async.hasData && async.data != "" && async.data !=null){
-                    var img = Image(image: FileImage(File(async.data!.toString())));
+                  future: ImageSaver.getImage(),
+                  builder: (context, async) {
+                    if (async.hasData &&
+                        async.data != "" &&
+                        async.data != null) {
+                      var img =
+                          Image(image: FileImage(File(async.data!.toString())));
+                      return GestureDetector(
+                        onTap: () {
+                          print("object pat");
+                          showMySheet(context);
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(top: 85, bottom: 10),
+                            height: 150,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              image: DecorationImage(
+                                image: img.image,
+                              ),
+                            )),
+                      );
+                    }
                     return GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         print("object pat");
-                         showMySheet( context);
-                        
+                        showMySheet(context);
                       },
                       child: Container(
-                        margin: EdgeInsets.only(top: 85, bottom: 10),
-                        height: 150,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          image: DecorationImage(
-                            image: img.image , 
-                          ),
-                        )),
+                          margin: EdgeInsets.only(top: 85, bottom: 10),
+                          height: 150,
+                          width: 150,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            image: DecorationImage(
+                              image:
+                                  AssetImage('assets/images/Profile_logo.png'),
+                            ),
+                          )),
                     );
-                  }
-                  return GestureDetector(
-                    onTap: (){
-                        print("object pat");
-                        showMySheet( context);
-                    },
-                    child: Container(
-                        margin: EdgeInsets.only(top: 85, bottom: 10),
-                        height: 150,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/Profile_logo.png'),
-                          ),
-                        )),
-                  );
-                }
-              ),
+                  }),
               Text(
                 name,
                 style: TextStyle(color: Colors.white, fontSize: 20),
@@ -105,8 +106,7 @@ class _profilePageState extends State<profilePage> {
               child: Column(children: [
                 GestureDetector(
                   onTap: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => ListGroup())),
+                      MaterialPageRoute(builder: (context) => ListGroup())),
                   child: Container(
                       child: Row(
                     children: [
@@ -129,8 +129,8 @@ class _profilePageState extends State<profilePage> {
                               width: 100,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                      image:
-                                          AssetImage('assets/images/Message.png'),
+                                      image: AssetImage(
+                                          'assets/images/Message.png'),
                                       fit: BoxFit.fill)),
                             )
                           ],
@@ -168,30 +168,35 @@ class _profilePageState extends State<profilePage> {
                 Container(
                   child: Row(
                     children: [
-                      Container(
-                        padding: EdgeInsets.only(top: 10),
-                        margin: EdgeInsets.only(
-                            left: 40, right: 20, top: 20, bottom: 20),
-                        height: 150,
-                        width: 150,
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(254, 245, 245, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(40)),
-                            border: Border.all(color: Colors.black)),
-                        child: Column(
-                          children: [
-                            Text("Мероприятия"),
-                            Container(
-                                height: 100,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/Events.png'),
-                                        fit: BoxFit.fill))),
-                          ],
-                        ),
-                      ),
+                      GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => EventPage())),
+                          child: Container(
+                            padding: EdgeInsets.only(top: 10),
+                            margin: EdgeInsets.only(
+                                left: 40, right: 20, top: 20, bottom: 20),
+                            height: 150,
+                            width: 150,
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(254, 245, 245, 1),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(40)),
+                                border: Border.all(color: Colors.black)),
+                            child: Column(
+                              children: [
+                                Text("Мероприятия"),
+                                Container(
+                                    height: 100,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/images/Events.png'),
+                                            fit: BoxFit.fill))),
+                              ],
+                            ),
+                          )),
                       Container(
                           padding: EdgeInsets.only(top: 10),
                           height: 150,
@@ -230,52 +235,52 @@ class _profilePageState extends State<profilePage> {
               builder: (context, async) {
                 String name = "Имя";
 
-            if( profileDataCurrent!= null){
-              print(profileDataCurrent!.name);
-                nameUser = profileDataCurrent!.name;
-                name = nameUser!;
-                permission =profileDataCurrent!.permisiion;
-                
-            }
-            return _profileInfo(name);
-          }
-        ), _contentInfo()],
+                if (profileDataCurrent != null) {
+                  print(profileDataCurrent!.name);
+                  nameUser = profileDataCurrent!.name;
+                  name = nameUser!;
+                  permission = profileDataCurrent!.permisiion;
+                }
+                return _profileInfo(name);
+              }),
+          _contentInfo()
+        ],
       ),
     ));
   }
 }
 
 showMySheet(BuildContext context) {
-                          showModalBottomSheet(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-                              ),
-                              context: context,
-                              builder: (context) => PhotoChoise());}
+  showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+      ),
+      context: context,
+      builder: (context) => PhotoChoise());
+}
 
-
-
-List<QueryDocumentSnapshot<Map<String, dynamic>>>? calendare ;
+List<QueryDocumentSnapshot<Map<String, dynamic>>>? calendare;
 List<ProfileData>? allData_calendare;
 
 ProfileData? profileDataCurrent;
 
-Future<ProfileData?> getUsersData({required String login , required String password}) async {
-   var querySnapshot = await fire.collection('users').doc(login).get();
+Future<ProfileData?> getUsersData(
+    {required String login, required String password}) async {
+  var querySnapshot = await fire.collection('users').doc(login).get();
 
-   Map? maps = querySnapshot.data();
-   if(maps != null){
-     profileDataCurrent = ProfileData.fromMap(maps);
-     permission = profileDataCurrent!.permisiion;
-     nameUser = profileDataCurrent!.name;
-     print(profileDataCurrent!.email);
-   }
-  
+  Map? maps = querySnapshot.data();
+  if (maps != null) {
+    profileDataCurrent = ProfileData.fromMap(maps);
+    permission = profileDataCurrent!.permisiion;
+    nameUser = profileDataCurrent!.name;
+    print(profileDataCurrent!.email);
+  }
+
   //  profileDataCurrent = profileData;
   //  get()
   //  ;
 
-  //  List<Event> 
+  //  List<Event>
   //  allData
   // var tte =querySnapshot.docs;
   //  allData_calendare = querySnapshot.docs()
@@ -293,7 +298,7 @@ Future<ProfileData?> getUsersData({required String login , required String passw
   // var allData = calendare![0]!.docs().map((doc) => doc.data()).toList();
   //   List allDaata = calendare.;
   //  calendare = calendare;
-  
+
   // if(calendare != null)
   // Event.fromMap(calendare);
   return profileDataCurrent;
@@ -303,12 +308,13 @@ Future<ProfileData?> getUsersData({required String login , required String passw
 //  await fire.collection('df5239jdsf3').doc("calen").delete();
 // }
 
-setUser(ProfileData data)async {
- 
-
+setUser(ProfileData data) async {
   // var uuid = Uuid();
   // String random = uuid.v1();
- await fire.collection('users').doc(data.email).set(data.toMap()); // update({"update":data.toMap()});
+  await fire
+      .collection('users')
+      .doc(data.email)
+      .set(data.toMap()); // update({"update":data.toMap()});
 }
 
 class ProfileData {
@@ -326,28 +332,27 @@ class ProfileData {
     required this.groupList,
   });
 
-   Map<String, dynamic> toMap(){
-     return {
-      "name":name,
+  Map<String, dynamic> toMap() {
+    return {
+      "name": name,
       // "to":modifiedReleaseDate,
       // "allDay":allDay,
       // "froml":modifiedReleaseDate2,
-      "email":email,
-      "descritption":name,
-      "permission":permisiion,
-      "groupList":groupList,
+      "email": email,
+      "descritption": name,
+      "permission": permisiion,
+      "groupList": groupList,
       // "description":description,
     };
-   }
+  }
 
-    factory ProfileData.fromMap(Map map){
+  factory ProfileData.fromMap(Map map) {
     return ProfileData(
-      name: map["name"] .toString(),
-      email: map["email"] .toString(),
-      descritption: map["descritption"].toString() ,
-       permisiion: map["permission"].toString() ,
-        groupList: map["groupList"].toString() ,
+      name: map["name"].toString(),
+      email: map["email"].toString(),
+      descritption: map["descritption"].toString(),
+      permisiion: map["permission"].toString(),
+      groupList: map["groupList"].toString(),
     );
-    }
-
+  }
 }

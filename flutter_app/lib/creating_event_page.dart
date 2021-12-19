@@ -1,4 +1,5 @@
 import 'package:flutter_app/calendar_page.dart';
+import 'package:uuid/uuid.dart';
 
 import 'provider/event_provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -199,7 +200,10 @@ class _CreateEventPageState extends State<CreateEventPage> {
     //   froml:from , to: to,
     //   allDay: allday
     // ));
+    var uuid = Uuid();
+    String random = uuid.v1();
     final event = Event(
+        id: random,
         description: titleController.text.toString(),
         name: titleController.text.toString(),
         froml: from,

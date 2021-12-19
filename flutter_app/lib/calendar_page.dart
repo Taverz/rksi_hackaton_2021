@@ -102,6 +102,6 @@ updateCalendare(Event data) async {
   String random = uuid.v1();
   await fire
       .collection('df5239jdsf3')
-      .doc(random)
+      .doc(data.id)
       .set({"update": data.toMap()}); // update({"update":data.toMap()});
 }
