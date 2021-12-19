@@ -24,9 +24,9 @@ class profilePage extends StatefulWidget {
 class _profilePageState extends State<profilePage> {
   @override
   Widget build(BuildContext context) {
-    _profileInfo(String name) {
+    _profileInfo(String name, String uchZav, String uchitel) {
       return Container(
-        height: 300,
+        height: 360,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -85,6 +85,16 @@ class _profilePageState extends State<profilePage> {
                   }),
               Text(
                 name,
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              SizedBox(height: 15,),
+              Text(
+                ""+ uchZav,
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              SizedBox(height: 15,),
+              Text(
+                "Куратор- "+ uchitel,
                 style: TextStyle(color: Colors.white, fontSize: 20),
               )
             ],
@@ -241,7 +251,7 @@ class _profilePageState extends State<profilePage> {
                   name = nameUser!;
                   permission = profileDataCurrent!.permisiion;
                 }
-                return _profileInfo(name);
+                return _profileInfo(name, profileDataCurrent!.indent, profileDataCurrent!.tech);
               }),
           _contentInfo()
         ],
@@ -273,6 +283,7 @@ Future<ProfileData?> getUsersData(
     profileDataCurrent = ProfileData.fromMap(maps);
     permission = profileDataCurrent!.permisiion;
     nameUser = profileDataCurrent!.name;
+    groupListt = profileDataCurrent!.groupList;
     print(profileDataCurrent!.email);
   }
 
@@ -323,6 +334,9 @@ class ProfileData {
   String descritption;
   String permisiion;
   String groupList;
+  String indent;
+  String classW;
+  String tech;
 
   ProfileData({
     required this.name,
@@ -330,6 +344,9 @@ class ProfileData {
     required this.descritption,
     required this.permisiion,
     required this.groupList,
+    required this.indent,
+    required this.classW,
+    required this.tech
   });
 
   Map<String, dynamic> toMap() {
@@ -342,6 +359,9 @@ class ProfileData {
       "descritption": name,
       "permission": permisiion,
       "groupList": groupList,
+      "indent":indent,
+      "classW":classW,
+      "tech":tech
       // "description":description,
     };
   }
@@ -353,6 +373,9 @@ class ProfileData {
       descritption: map["descritption"].toString(),
       permisiion: map["permission"].toString(),
       groupList: map["groupList"].toString(),
+      indent : map["indent"].toString(),
+      classW: map["classW"].toString(),
+      tech: map["tech"].toString()
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/login_page.dart';
 import 'package:flutter_app/main.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 
 class GroupChat extends StatelessWidget {
   final String groupChatId, groupName;
@@ -15,6 +16,9 @@ class GroupChat extends StatelessWidget {
   final FirebaseAuth _auth = logiin;
 
   void onSendMessage() async {
+
+      // FirebaseChatCore.instance.createRoom(User ).
+
     if (_message.text.isNotEmpty) {
       Map<String, dynamic> chatData = {
         "sendBy": nameUser, //logiin.currentUser!.displayName,

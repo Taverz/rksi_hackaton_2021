@@ -18,7 +18,7 @@ import 'chat/chat_page.dart';
 final FirebaseFirestore fire = FirebaseFirestore.instance;
 // final FirebaseAuth _auth = FirebaseAuth.instance;
 String? emaiil, password;
-String? nameUser, permission;
+String? nameUser, permission, groupListt;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

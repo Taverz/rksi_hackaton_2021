@@ -56,11 +56,13 @@ class _ListGroupState extends State<ListGroup> {
       body: FutureBuilder(
           future: listGroupChat(),
           builder: (context, async) {
-            List<QueryDocumentSnapshot<Map<String, dynamic>>> groupListWW = [];
+            List<dynamic> groupListWW = [];
             if (async.data != null && async.hasData) {
-              groupListWW = async.data
-                  as List<QueryDocumentSnapshot<Map<String, dynamic>>>;
+              groupListWW = async.data as List<dynamic>;
               print("NAME GROUP " + groupListWW.length.toString());
+              print("OOOO "+groupListWW[0]["id"].toString());
+
+
               //  print("NAME GROUP "+groupListWW[0]["name"]);
 
             }
@@ -79,7 +81,8 @@ class _ListGroupState extends State<ListGroup> {
                                       groupName: groupListWW[index]["name"],
                                     )));
                       },
-                      child: _itemGroupList(title: groupListWW[index]["name"]));
+                      child: _itemGroupList(title:groupListWW.length > 0 ?
+                       groupListWW[index] ["name"] : "" ));
                   // return _itemGroupList(title: groupListWW[index]["name"]);
                   // return Container(child: Text(groupListWW[index]["name"]),);
                 });
@@ -171,15 +174,43 @@ class _ListGroupState extends State<ListGroup> {
 
   final FirebaseFirestore _fire = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  List<QueryDocumentSnapshot<Map<String, dynamic>>> listGroup = [];
+  List listGroup = [];
 
-  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
+  Future<List>
       listGroupChat() async {
     String _mm = _auth.currentUser!.uid;
-
+  List<String> listUserChat = groupListt!.split(",");
     await _fire.collection('groupchat').get().then((value) {
-      listGroup = value.docs;
+      value.docs.forEach((element) {
+        if(listUserChat.contains(element.id)){
+           listGroup.add(element);
+        }
+      });
+     
     });
+
+     
+    //  listUserChat.forEach((element) async{
+    //   listGroup = await _fire
+    //       .collection('groupchat')
+    //       .doc(element.toString())
+         
+    //       .collection('chats')
+    //       .snapshots().toList();
+    //       print(listGroup.length);
+          // .get()
+          // .then((value) {
+          //     print("DDDDDMM " +value.toString());
+          //     print("DDDDDMM " +value.docs.toString());
+          //     // setState(() {
+          //     listGroup = value.docs;
+          //     // });
+          //   });
+      // });
+
+      // setState(() {
+        
+      // });
 
     return listGroup;
   }
@@ -190,21 +221,38 @@ class _ListGroupState extends State<ListGroup> {
       getGroupChat() async {
     String uid = _auth.currentUser!.uid;
 
-    await fire.collection('groupchat').doc().get().then((value2) async {
-      print("WWWW");
-      print(value2.id);
+    List<String> listUserChat = groupListt!.split(",");
+    listUserChat.forEach((element) async{
       await _fire
           .collection('groupchat')
-          .doc(value2.id)
+          .doc(element)
           .collection('chats')
           .get()
           .then((value) {
-        print("DDDDD");
-        // setState(() {
-        groupList = value.docs;
-        // });
+              print("DDDDDMM");
+              // setState(() {
+              groupList = value.docs;
+              // });
+            });
       });
-    });
+    
+
+    // await fire.collection('groupchat').doc().get().then((value2) async {
+    //   print("WWWW");
+    //   print(value2.id);
+
+    //   await _fire
+    //       .collection('groupchat')
+    //       .doc(value2.id)
+    //       .collection('chats')
+    //       .get()
+    //       .then((value) {
+    //     print("DDDDD");
+    //     // setState(() {
+    //     groupList = value.docs;
+    //     // });
+    //   });
+    // });
 
     // _fire
     //             .collection('groupchat')
