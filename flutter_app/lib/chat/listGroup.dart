@@ -30,21 +30,26 @@ class _ListGroupState extends State<ListGroup> {
         title: Text("Чаты"),
         actions: <Widget>[
           IconButton(
-              onPressed: () async {
-                showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                        content: TextField(controller: controller),
-                        actions: [
-                          FloatingActionButton(onPressed: () async {
+            icon: Icon(Icons.add_outlined),
+            onPressed: () async {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                    content: TextField(controller: controller),
+                    actions: [
+                      FloatingActionButton(
+                          child: Icon(Icons.add_outlined),
+                          backgroundColor: Colors.purple,
+                          onPressed: () async {
                             await createChatGroup(controller.text);
                           })
-                        ],
-                        elevation: 24,
-                        title: Text("Введите название чата"),
-                        backgroundColor: Colors.deepPurple[400]));
-              },
-              icon: Icon(Icons.add_outlined))
+                    ],
+                    elevation: 24,
+                    title: Text("Введите название чата"),
+                    backgroundColor: Colors.deepPurple[400]),
+              );
+            },
+          )
         ],
         backgroundColor: Colors.purple,
       ),
