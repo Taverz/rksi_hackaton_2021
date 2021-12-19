@@ -8,7 +8,6 @@ import 'package:flutter_app/provider/event_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/services.dart';
 
 import 'package:firebase_core/firebase_core.dart';

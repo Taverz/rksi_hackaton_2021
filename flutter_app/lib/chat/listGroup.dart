@@ -1,5 +1,5 @@
 import 'dart:ffi';
-
+import 'dart:math' as math;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -107,9 +107,11 @@ class _ListGroupState extends State<ListGroup> {
               children: [
                 Container(
                   height: 100,
-                  width: 50,
+                  width: 100,
                   decoration: BoxDecoration(
-                    color: Colors.pink,
+                    color:
+                        Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                            .withOpacity(1.0),
                     shape: BoxShape.circle,
                   ),
                 ),
