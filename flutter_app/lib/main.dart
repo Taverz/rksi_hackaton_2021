@@ -6,10 +6,8 @@ import 'package:flutter_app/profile_page.dart';
 import 'package:flutter_app/calendar_page.dart';
 import 'package:flutter_app/provider/event_provider.dart';
 import 'package:provider/provider.dart';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/services.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -23,6 +21,8 @@ String? emaiil, password;
 String? nameUser, permission;
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
   await getInitFireBaseAndPush();
   // setUser(ProfileData(
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
       create: (context) => EventProvider(),
-      child: const MaterialApp(
+      child: MaterialApp(
         home: LoginPage(),
       ));
 }

@@ -15,7 +15,7 @@ class CalendarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final envents = Provider.of<EventProvider>(context).events;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Календарь"),
@@ -65,20 +65,18 @@ class CalendarWidget extends StatelessWidget {
   }
 }
 
-List<QueryDocumentSnapshot<Map<String, dynamic>>>? calendare ;
+List<QueryDocumentSnapshot<Map<String, dynamic>>>? calendare;
 List<Event>? allData_calendare;
 Future<List<Event>?> getCAlendare() async {
-   QuerySnapshot querySnapshot = await fire.collection('df5239jdsf3').
-   get()
-   ;
-  //  List<Event> 
+  QuerySnapshot querySnapshot = await fire.collection('df5239jdsf3').get();
+  //  List<Event>
   //  allData
-  var tte =querySnapshot.docs;
-   allData_calendare = querySnapshot.docs.map((doc ) {
+  var tte = querySnapshot.docs;
+  allData_calendare = querySnapshot.docs.map((doc) {
     //var trr = doc.data();
     //print("DOC"+doc["update"].toString());
     return Event.fromMap(doc["update"] as Map);
-   }).toList();
+  }).toList();
   //  .then((value ){
   //   calendare = value.docs.toList() ;
   // });
@@ -86,7 +84,7 @@ Future<List<Event>?> getCAlendare() async {
   // var allData = calendare![0]!.docs().map((doc) => doc.data()).toList();
   //   List allDaata = calendare.;
   //  calendare = calendare;
-  
+
   // if(calendare != null)
   // Event.fromMap(calendare);
   return allData_calendare;
@@ -95,10 +93,11 @@ Future<List<Event>?> getCAlendare() async {
 // deleteCalendare()async {
 //  await fire.collection('df5239jdsf3').doc("calen").delete();
 // }
+// DeleteCalendare() {
+//   print("await fire.collection('df5239jdsf3').doc(Uuid.NAMESPACE_URL)");
+// }
 
-updateCalendare(Event data)async {
- 
-
+updateCalendare(Event data) async {
   var uuid = Uuid();
   String random = uuid.v1();
   await fire
@@ -106,4 +105,3 @@ updateCalendare(Event data)async {
       .doc(random)
       .set({"update": data.toMap()}); // update({"update":data.toMap()});
 }
-

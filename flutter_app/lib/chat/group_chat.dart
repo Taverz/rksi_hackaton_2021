@@ -40,6 +40,7 @@ class GroupChat extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(groupName),
+        backgroundColor: Colors.purple,
         actions: [
           // IconButton(
           //     onPressed: () => Navigator.of(context).push(
@@ -161,7 +162,7 @@ class GroupChat extends StatelessWidget {
                 ],
               )),
         );
-      }  else {
+      } else {
         return SizedBox();
       }
     });

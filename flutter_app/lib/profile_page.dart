@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/calendar_page.dart';
 import 'package:flutter_app/chat/chat_page.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_app/image_chooise/profile_avatar_image/image_demo_editor
 import 'package:flutter_app/image_chooise/profile_avatar_image/pgoto_coise.dart';
 import 'package:flutter_app/main.dart';
 import 'package:flutter_app/model/event.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:uuid/uuid.dart';
 
 class profilePage extends StatefulWidget {
@@ -166,33 +168,28 @@ class _profilePageState extends State<profilePage> {
                 Container(
                   child: Row(
                     children: [
-                      GestureDetector(
-                         onTap: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => EventPage())),
-                        child: Container(
-                          padding: EdgeInsets.only(top: 10),
-                          margin: EdgeInsets.only(
-                              left: 40, right: 20, top: 20, bottom: 20),
-                          height: 150,
-                          width: 150,
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(254, 245, 245, 1),
-                              borderRadius: BorderRadius.all(Radius.circular(40)),
-                              border: Border.all(color: Colors.black)),
-                          child: Column(
-                            children: [
-                              Text("Мероприятия"),
-                              Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/Events.png'),
-                                          fit: BoxFit.fill))),
-                            ],
-                          ),
+                      Container(
+                        padding: EdgeInsets.only(top: 10),
+                        margin: EdgeInsets.only(
+                            left: 40, right: 20, top: 20, bottom: 20),
+                        height: 150,
+                        width: 150,
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(254, 245, 245, 1),
+                            borderRadius: BorderRadius.all(Radius.circular(40)),
+                            border: Border.all(color: Colors.black)),
+                        child: Column(
+                          children: [
+                            Text("Мероприятия"),
+                            Container(
+                                height: 100,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/Events.png'),
+                                        fit: BoxFit.fill))),
+                          ],
                         ),
                       ),
                       Container(

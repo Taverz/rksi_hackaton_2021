@@ -55,17 +55,37 @@ class _TasksState extends State<Tasks> {
     CalendarAppointmentDetails details,
   ) {
     final event = details.appointments.first;
-    return Container(
-      width: details.bounds.width,
-      height: details.bounds.height,
-      decoration: BoxDecoration(
-          color: Color.fromRGBO(247, 234, 251, 0.8),
-          borderRadius: BorderRadius.circular(10)), //Получение размеров
-      child: Text(
-        event.name,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
+    return GestureDetector(
+      onTap: () => showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+              title: Text("Удалить данную запись?"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    // DeleteCalendare();
+                    Navigator.pop(context, 'Да');
+                  },
+                  child: const Text('Да'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Нет'),
+                  child: const Text('Нет'),
+                ),
+              ],
+              backgroundColor: Colors.purple)),
+      child: (Container(
+        width: details.bounds.width,
+        height: details.bounds.height,
+        decoration: BoxDecoration(
+            color: Color.fromRGBO(247, 234, 251, 0.8),
+            borderRadius: BorderRadius.circular(10)), //Получение размеров
+        child: Text(
+          event.name,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      )),
     );
   }
 }
